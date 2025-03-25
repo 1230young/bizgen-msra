@@ -1,4 +1,4 @@
-# art-msra.github.io
+# bizgen-msra.github.io
 
 Recently, state-of-the-art text-to-image generation models, such as Flux and Ideogram 2.0, have made significant progress in sentence-level visual text rendering. In this paper, we focus on the more challenging scenarios of article-level visual text rendering and address a novel task of generating high-quality business content, including infographics and slides, based on user provided article-level descriptive prompts and ultra-dense layouts.  The fundamental challenges are twofold: significantly longer context lengths and the scarcity of high-quality business content data.
 
