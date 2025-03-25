@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="BizGen: Advancing Article-level Visual Text Rendering for Infographics Generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BizGen: Advancing Article-level Visual Text Rendering for Infographics Generation
+  </title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/img/COLE.jpg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <style>
+    .publication-title {
+      font-family: "textsc "
+    }
+
+    video {
+      outline: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    .image_wrapper {
+      position: relative;
+      width: 226px;
+      height: 226px;
+    }
+
+    .image_container {
+      border-radius: 10px;
+      /*设置图片的圆角，可以根据你的需求调整这个值*/
+      /*margin: 10px; !* 在图片的外部元素上设置间距 *!*/
+      overflow: hidden;
+      /* 为了保持图片的圆角效果 */
+      position: relative;
+      width: 100%;
+
+      padding-bottom: 100%;
+    }
+
+    .image_container img {
+
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* 这会使图片保持原始比例，但仍然填充其容器 */
+      object-position: center;
+      /* 新增加的代码，让图片居中 */
+    }
+
+    .caption {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      /* 垂直居中 */
+      justify-content: center;
+      /* 水平居中 */
+      font-family: 'Comic Sans MS', 'Verdana', 'Tahoma', sans-serif;
+      text-align: center;
+      /* 让文本在其容器中水平居中 */
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .image_container:hover .caption {
+      opacity: 1;
+    }
+
+    .column.is-2.has-text-centered img.interpolation-image {
+
+      object-fit: cover;
+      border-radius: 10px;
+      transition: opacity 0.5s ease;
+      object-position: center;
+      /* 新增加的代码，让图片居中 */
+    }
+
+    .column.is-2.has-text-centered:hover img.interpolation-image {
+      opacity: 0.5;
+    }
+
+    .column.is-2.has-text-centered .caption {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      /* 垂直居中 */
+      justify-content: center;
+      /* 水平居中 */
+      font-family: 'Comic Sans MS', 'Verdana', 'Tahoma', sans-serif;
+      text-align: center;
+      /* 让文本在其容器中水平居中 */
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .column.is-2.has-text-centered:hover .caption {
+      opacity: 1;
+    }
+
+    .columns.is-centered img {
+      margin-bottom: 20px;
+      /* 或者你想要的任何值 */
+    }
+
+
+    .section {
+      margin: 3px;
+      padding: 5px;
+    }
+
+    .container2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .container2 img {
+      height: 300px;
+      /* Adjust the height as needed */
+      object-fit: cover;
+      margin: 10px;
+    }
+
+    .iframe-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        iframe {
+            border: none; /* 可选：移除 iframe 边框 */
+    }
+
+    .container-row {
+      display: flex;
+      justify-content: space-between; /* 均匀分布图片 */
+      margin-bottom: 20px;  /* 行间距 */
+      width: 100%;
+    }
+
+    .container-row img {
+      flex: 1;             /* 等分容器宽度 */
+      height: 300px;       /* 固定高度 */
+      object-fit: cover;   /* 保持比例填充高度 */
+      margin: 0 5px;       /* 图片间距 */
+      border-radius: 4px;  /* 可选圆角 */
+    }
+  </style>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 ">BizGen: Advancing Article-level Visual Text Rendering for Infographics Generation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Yuyang_Peng1">Yuyang Peng</a>&nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Shishi_Xiao3">Shishi Xiao</a>&nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Keming_Wu1">Keming Wu</a>&nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Qisheng_Liao1">Qisheng Liao</a>
+                &nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Bohan_CHEN2">Bohan CHEN</a>
+                &nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://www.microsoft.com/en-us/research/people/keli/">Kevin Lin</a>
+                &nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://www.microsoft.com/en-us/research/people/dahua/">Danqing Huang</a>
+                &nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://sites.google.com/a/usc.edu/jili/">Ji Li</a>
+                &nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://www.microsoft.com/en-us/research/people/yuyua/">Yuhui Yuan</a>
+                &nbsp;&nbsp;&nbsp;
+              <br>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup> </sup>Tsinghua University&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+              <span class="author-block"><sup> </sup>Brown University&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+              <span class="author-block"><sup> </sup>University of Liverpool&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+              <span class="author-block"><sup> </sup>Microsoft Research Asia&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href=""
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      🚀
+                    </span>
+                    <span>Demo</span>
+                  </a>
+                </span>
+
+                <!-- <span class="link-block">
+                  <a href="https://glyph-byt5-v2.github.io/" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      🚀
+                    </span>
+                    <span>Glyph-ByT5-v2</span>
+                  </a>
+                </span> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-vcentered interpolation-panel">
+        <div class="columns is-centered">
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/paragraph_1.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/paragraph_2.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/paragraph_3.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/paragraph_4.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered interpolation-panel">
+        <div class="columns is-centered">
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/design_1.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/design_2.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/design_3.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/design_4.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered interpolation-panel">
+        <div class="columns is-centered">
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/scene_1.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/scene_2.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/scene_3.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+          <div class="column is-3 ">
+            <img src="./static/assets/teaser/scene_4.png" class="interpolation-image"
+              alt="Interpolate start reference image." />
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <br> -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Generated Infographics</h2>
+    </div>
+  </div>
+  <div class="container-row">
+    <!-- <img src="static/img/Real/cake.png" alt="Image 1" style="height: 445px; width: auto;">
+    <img src="static/img/Real/table.png" alt="Image 2" style="height: 445px; width: auto;"> -->
+    <img src="static/img/info_teaser/1.png" alt="info 1" style="height: auto; width: 200px;">
+    <img src="static/img/info_teaser/2.png" alt="info 2" style="height: auto; width: 200px;">
+    <img src="static/img/info_teaser/3.png" alt="info 3" style="height: auto; width: 200px;">
+    <img src="static/img/info_teaser/4.png" alt="info 4" style="height: auto; width: 200px;">
+    <img src="static/img/info_teaser/5.png" alt="info 5" style="height: auto; width: 200px;">
+  </div>
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Generated Slides</h2>
+    </div>
+  </div>
+  <div class="container-row">  
+    <img src="static/img/slide_teaser/s1p1.png" alt="slide 1_1" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s1p2.png" alt="slide 1_2" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s1p3.png" alt="slide 1_3" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s1p4.png" alt="slide 1_4" style="height: auto; width: 250px;">
+  </div>
+  <div class="container-row">  
+    <img src="static/img/slide_teaser/s2p1.png" alt="slide 2_1" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s2p2.png" alt="slide 2_2" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s2p3.png" alt="slide 2_3" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s2p4.png" alt="slide 2_4" style="height: auto; width: 250px;">
+  </div>
+  <div class="container-row">  
+    <img src="static/img/slide_teaser/s3p1.png" alt="slide 3_1" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s3p2.png" alt="slide 3_2" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s3p3.png" alt="slide 3_3" style="height: auto; width: 250px;">
+    <img src="static/img/slide_teaser/s3p4.png" alt="slide 3_4" style="height: auto; width: 250px;">
+  </div>
+
+
+  <br>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Recently, state-of-the-art text-to-image generation models, such as Flux and Ideogram 2.0, have made 
+              significant progress in sentence-level visual text rendering. In this paper, we focus on the more 
+              challenging scenarios of article-level visual text rendering and address a novel task of generating 
+              high-quality business content, including infographics and slides, based on user provided article-level 
+              descriptive prompts and ultra-dense layouts.  The fundamental challenges are twofold: significantly 
+              longer context lengths and the scarcity of high-quality business content data.
+            </p>
+            <p>
+              In contrast to most previous works that focus on a limited number of sub-regions and sentence-level 
+              prompts, ensuring precise adherence to ultra-dense layouts with tens or even hundreds of sub-regions in
+              business content is far more challenging. We make two key technical contributions: (i) the construction 
+              of scalable, high-quality business content dataset, i.e., Infographics-650K, equipped with 
+              ultra-dense layouts and prompts by implementing a layer-wise retrieval-augmented infographic generation 
+              scheme; and (ii) a layout-guided cross attention scheme, which injects tens of region-wise prompts into 
+              a set of cropped region latent space according to the ultra-dense layouts, and refine each sub-regions 
+              flexibly during inference using a layout conditional CFG. 
+            </p>
+            <p>
+              We demonstrate the strong results of our system compared to previous SOTA systems such as Flux and SD3 
+              on our BizEval prompt set. Additionally, we conduct thorough ablation experiments to verify the 
+              effectiveness of each component. We hope our constructed Infographics-650K and BizEval can encourage 
+              the broader community to advance the progress of business content generation.
+            </p>
+            
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Scalable Data Engine</h2>
+        <img src="./static/img/method/info_data.png" alt="data" style="width: 80%;">
+        <img src="./static/img/method/data_engine.png" alt="data" style="width: 80%;">
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Layout-Guided Cross Attention</h2>
+        <img src="./static/img/method/input.png" alt="input" style="width: 80%;">
+        <img src="./static/img/method/attention.png" alt="attention" style="width: 80%;">
+        <img src="./static/img/method/framework-train.png" alt="train" style="width: 80%;">
+        <img src="./static/img/method/framework-eval.png" alt="eval" style="width: 80%;">
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Layout Conditional CFG</h2>
+        <img src="./static/img/method/lcfg.png" alt="lcfg" style="width: 80%;">
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Local region quality accessment pipeline</h2>
+        <img src="./static/img/method/metrics.png" alt="lgsr" style="width: 80%;">
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Generation Quality Compare</h2>
+        <img src="./static/img/user_study/quality.png" alt="quality" style="width: 80%;">
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    
+  </section>
+  <br>
+  <br> 
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+        @article{peng2025bizgen,
+          title={BizGen: Advancing Article-level Visual Text Rendering for Infographics Generation}, 
+          author={Yuyang Peng and Shishi Xiao and Keming Wu and Qisheng Liao and Bohan Chen and Kevin Lin and Danqing Huang and Ji Li and Yuhui Yuan},
+          journal={arXiv preprint arXiv:2502.18364},
+          year={2025},
+        }
+      </code></pre>
+    </div>
+  </section>
+  
+  
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 style="text-align: center; font-size: 1.5em; font-weight: bold;">Acknowledgements</h1>
+        Website adapted from the following <a href="https://nerfies.github.io/">template</a>
+        <br>
+    </div>
+  </div>
+
+  <div data-v-28039ae4="" data-v-bd5a58d0="" class="footer-component">
+      <div data-v-28039ae4="" class="container-width">
+          <p data-v-28039ae4=""><a data-v-28039ae4="" target="_blank"
+                  href="mailto: rodin-diffusion@microsoft.com">Contact Us</a> | <a data-v-28039ae4=""
+                  target="_blank" href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy &amp;
+                  Cookies</a> | <a data-v-28039ae4="" target="_blank"
+                  href="https://go.microsoft.com/fwlink/?linkid=2259814">Consumer Health Privacy</a> | <a
+                  data-v-28039ae4="" target="_blank"
+                  href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use</a> | <a
+                  data-v-28039ae4="" target="_blank"
+                  href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks">Trademarks</a>
+              | <a data-v-28039ae4="">© Microsoft 2024</a></p>
+          <p data-v-28039ae4=""><span data-v-28039ae4=""><a data-v-28039ae4="" target="_blank"
+                      href="https://www.microsoft.com/" aria-label="Microsoft"></a></span></p>
+      </div>
+  </div>
+  
+  </body>
+  </html>
